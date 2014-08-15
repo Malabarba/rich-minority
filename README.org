@@ -1,3 +1,6 @@
+#+OPTIONS: tags:nil 
+#+OPTIONS: toc:nil num:nil
+
 * rich-minority-mode
 
 Emacs package for hiding and/or highlighting the list of minor-modes

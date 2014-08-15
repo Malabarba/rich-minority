@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2014  <bruce.connor.am@gmail.com>
 
-;; Author:  <bruce.connor.am@gmail.com>
+;; Author: Artur Malabarba <bruce.connor.am@gmail.com>
 ;; URL: http://github.com/Bruce-Connor/rich-minority
 ;; Version: 0.1
 ;; Keywords: mode-line faces
@@ -11,40 +11,53 @@
 
 ;;; Commentary:
 ;;
+;; rich-minority-mode
+;; ══════════════════
 ;; 
-
-;;; Instructions:
-;;
-;; INSTALLATION
-;;
-;; This package is available fom Melpa, you may install it by calling
-;; M-x package-install.
-;;
-;; Alternatively, you can download it manually, place it in your
-;; `load-path' and require it with
-;;
-;;     (require 'rich-minority)
-
-;;; License:
-;;
-;; This file is NOT part of GNU Emacs.
-;;
-;; This program is free software; you can redistribute it and/or
-;; modify it under the terms of the GNU General Public License
-;; as published by the Free Software Foundation; either version 2
-;; of the License, or (at your option) any later version.
-;;
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-;; GNU General Public License for more details.
+;;   Emacs package for hiding and/or highlighting the list of minor-modes
+;;   in the mode-line.
 ;; 
+;; Usage
+;; ─────
+;; 
+;;   To activate the enrichment of your minor-modes list, call `M-x
+;;   rich-minority-mode', or add this to your init file:
+;; 
+;;   ╭────
+;;   │ (rich-minority-mode 1)
+;;   ╰────
+;; 
+;;   By default, this has a couple of small effects (provided as examples)
+;;   it is up to you to customize it to your liking with the following
+;;   three variables:
+;; 
+;;   rm-excluded-modes: List of minor mode names that will be hidden from the
+;;                      minor-modes list. Use this to hide *only* a few modes
+;;                      that are always active and don't really contribute
+;;                      information.
+;;   rm-included-modes: List of minor mode names that are allowed on the
+;;                      minor-modes list. Use this to hide *all but* a few
+;;                      modes.
+;;   rm-text-properties: List text properties to apply to each minor-mode
+;;                       lighter. For instance, by default we highlight
+;;                       `Ovwrt' with a red face, so you always know if
+;;                       you're in `overwrite-mode'.
+;; 
+;; 
+;; Installation
+;; ────────────
+;; 
+;;   This package is available fom Melpa, you may install it by calling
+;;   `M-x package-install'.
+;; 
+;;   Alternatively, you can download it manually, place it in your
+;;   `load-path' and require it with
+;; 
+;;   ╭────
+;;   │ (require 'rich-minority)
+;;   ╰────
 
-;;; Change Log:
-;; 0.1 - 2014/08/14 -  Created File.
-;;; Code:
 
-(defconst rich-minority-version "0.1" "Version of the rich-minority.el package.")
 (defun rm-bug-report ()
   "Opens github issues page in a web browser. Please send any bugs you find.
 Please include your Emacs and rich-minority versions."
