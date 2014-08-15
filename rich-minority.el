@@ -61,15 +61,18 @@ Please include your emacs and rich-minority versions."
 (defcustom rm-excluded-modes '(" hl-p")
   "List of minor modes you want to hide from the mode-line.
 
-- If empty (or nil), all minor modes are shown in the
-  mode-line (but see also `rm-included-modes').
+Has three possible values:
 
-- Otherwise this is a list of minor mode names that will be
-  hidden in the minor-modes list.
+- nil: All minor modes are shown in the mode-line (but see also
+  `rm-included-modes').
 
-The elements are strings. If you want to use REGEXPs instead, you
-can set this variable to a single string (instead of a list) and
-this will be compared to each minor-mode lighter as a regexp.
+- List of strings: Represents a list of minor mode names that
+  will be hidden from the minor-modes list.
+
+- A string: If this variable is set to a single string, this
+  string must be a regexp. This regexp will be compared to each
+  minor-mode lighter, and those which match are hidden from the
+  minor-mode list.
 
 If you'd like to use a list of regexps, simply use something like the following:
     (setq rm-excluded-modes (mapconcat 'identity list-of-regexps \"\\\\|\"))
@@ -85,16 +88,17 @@ minor-mode lighters start with a space."
 (defcustom rm-included-modes nil
   "List of minor modes you want to include in the mode-line.
 
-- If empty (or nil), all minor modes are shown in the
-  mode-line (but see also `rm-excluded-modes').
+- nil: All minor modes are shown in the mode-line (but see also
+  `rm-excluded-modes').
 
-- Otherwise, this is a list of minor mode names are allowed on
-  the minor-modes list. Any minor-mode whose lighter is not in
-  this list will NOT be displayed.
+- List of strings: Represents a list of minor mode names that are
+  allowed on the minor-modes list. Any minor-mode whose lighter
+  is not in this list will NOT be displayed.
 
-The elements are strings. If you want to use REGEXPs instead, you
-can set this variable to a single string (instead of a list) and
-this will be compared to each minor-mode lighter as a regexp.
+- A string: If this variable is set to a single string, this
+  string must be a regexp. This regexp will be compared to each
+  minor-mode lighter, and only those which match are displayed on
+  the minor-mode list.
 
 If you'd like to use a list of regexps, simply use something like the following:
     (setq rm-included-modes (mapconcat 'identity list-of-regexps \"\\\\|\"))
@@ -107,10 +111,20 @@ minor-mode lighters start with a space."
   :package-version '(rich-minority . "0.1"))
 
 (defcustom rm-text-properties
-  '(("\\` Ovwrt\\'" 'face 'font-lock-warning-face)
-    (t 'face 'sml/folder))
-  ""
-  :type '(repeat (cons (choice regexp (const :tag "Fallback" t)) (repeat sexp)))
+  '(("\\` Ovwrt\\'" 'face 'font-lock-warning-face))
+  "Alist of text properties to be applied to minor-mode lighters.
+The car of each element must be a regexp, and the cdr must be a
+list of text properties.
+
+    (REGEXP PROPERTY-NAME PROPERTY-VALUE ...)
+
+If the regexp matches a minor mode lighter, the text properties
+are applied to it. They are tested in order, and search stops at
+the first match.
+
+These properties take priority over those defined in
+`rm-base-text-properties'."
+  :type '(repeat (cons regexp (repeat sexp)))
   :group 'rich-minority
   :package-version '(rich-minority . "0.1"))
 
@@ -130,7 +144,7 @@ minor-mode lighters start with a space."
 
 (defcustom rm-base-text-properties
   '('help-echo 'rm--help-echo
-              'mouse-face 'mode-line-highlight
+               'mouse-face 'mode-line-highlight
               'local-map 'mode-line-minor-mode-keymap)
   "List of text propeties to apply to every minor mode."
   :type '(repeat sexp)
@@ -142,18 +156,13 @@ minor-mode lighters start with a space."
   (if (null (stringp mode))
       `(:propertize ,mode ,@rm-base-text-properties)
     (let ((al rm-text-properties)
-          done)
-      (or (progn
-            (while (and (null done) al)
-              (setq done (pop al))
-              (if (or (eq (car done) t)
-                      (string-match (car done) mode))
-                  (setq al (eval `(propertize ,mode
-                                              ,@rm-base-text-properties
-                                              ,@(cdr done))))
-                (setq done nil)))
-            al)
-          (eval `(propertize ,mode ,@rm-base-text-properties))))))
+          done prop)
+      (while (and (null done) al)
+        (setq done (pop al))
+        (if (string-match (car done) mode)
+            (setq prop (cdr done))
+          (setq done nil)))
+      (eval `(propertize ,mode ,@prop ,@rm-base-text-properties)))))
 
 (defun rm--remove-hidden-modes (li)
   "Remove from LI elements that match `rm-excluded-modes' or don't match `rm-included-modes'."
