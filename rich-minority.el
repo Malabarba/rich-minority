@@ -5,7 +5,7 @@
 ;; Author:  <bruce.connor.am@gmail.com>
 ;; URL: http://github.com/Bruce-Connor/rich-minority
 ;; Version: 0.1
-;; Keywords: mode-line
+;; Keywords: mode-line faces
 ;; Prefix: rm
 ;; Separator: -
 
@@ -47,7 +47,7 @@
 (defconst rich-minority-version "0.1" "Version of the rich-minority.el package.")
 (defun rm-bug-report ()
   "Opens github issues page in a web browser. Please send any bugs you find.
-Please include your emacs and rich-minority versions."
+Please include your Emacs and rich-minority versions."
   (interactive)
   (message "Your rm-version is: %s, and your emacs version is: %s.\nPlease include this in your report!"
            rich-minority-version emacs-version)
@@ -57,7 +57,9 @@ Please include your emacs and rich-minority versions."
   (interactive)
   (customize-group 'rich-minority t))
 
-;;;###autoload
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Customization variables.
 (defcustom rm-excluded-modes '(" hl-p")
   "List of minor modes you want to hide from the mode-line.
 
@@ -128,18 +130,25 @@ These properties take priority over those defined in
   :group 'rich-minority
   :package-version '(rich-minority . "0.1"))
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Functions and Defvars
+(defconst rm--help-echo-bottom
+  "Mouse-1: Mode Menu.\nMouse-2: Mode Help.\nMouse-3: Toggle Minor Modes.")
+
+;;;###autoload
 (defun rm--mode-list-as-string-list ()
   "Return `minor-mode-list' as a simple list of strings."
   (let ((full-list (remove "" (mapcar #'format-mode-line minor-mode-alist))))
     (setq rm--help-echo
           (format "Full list:\n   %s\n\n%s"
                   (mapconcat 'identity full-list "\n   ")
-                  sml/major-help-echo))
+                  rm--help-echo-bottom))
     (mapcar #'rm--propertize
             (rm--remove-hidden-modes
              full-list))))
 
-(defvar-local rm--help-echo nil 
+(defvar-local rm--help-echo nil
   "Used to set the help-echo string dynamically.")
 
 (defcustom rm-base-text-properties
@@ -169,7 +178,7 @@ These properties take priority over those defined in
   (let ((pred (if (listp rm-excluded-modes) #'member #'rm--string-match))
         (out li))
     (when rm-excluded-modes
-      (setq out 
+      (setq out
             (remove nil
                     (mapcar
                      (lambda (x) (unless (and (stringp x)
@@ -178,7 +187,7 @@ These properties take priority over those defined in
                      out))))
     (when rm-included-modes
       (setq pred (if (listp rmm-included-modes) #'member #'rm--string-match))
-      (setq out 
+      (setq out
             (remove nil
                     (mapcar
                      (lambda (x) (unless (and (stringp x)
@@ -191,5 +200,41 @@ These properties take priority over those defined in
   "Like `string-match', but arg STRING comes before REGEXP."
   (string-match regexp string))
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; minor-mode
+(defvar rm--mode-line-construct
+  '(:eval (rm--mode-list-as-string-list))
+  "Construct used to replace `minor-mode-alist'.")
+
+(defvar rm--warning-absent-element
+  "Couldn't find %S inside `mode-line-modes'. If you didn't change it yourself, please file a bug report with M-x rm-bug-report"
+  "Warning message used when something wasn't found.")
+
+(defvar rm--backup-construct nil
+  "Construct containing `minor-mode-alist' which we removed from the mode-line.")
+
+;;;###autoload
+(define-minor-mode rich-minority-mode nil nil " $"
+  :global t
+  (if rich-minority-mode
+      (let ((place (or (member 'minor-mode-alist mode-line-modes)
+                       (member-if
+                        (lambda (x) (and (listp x)
+                                    (equal (car x) :propertize)
+                                    (equal (cadr x) '("" minor-mode-alist))))
+                        mode-line-modes))))
+        (if place
+            (progn
+              (setq rm--backup-construct (car place))
+              (setcar place rm--mode-line-construct))
+          (setq rich-minority-mode nil)
+          (warn rm--warning-absent-element 'minor-mode-alist)))
+    (let ((place (member rm--mode-line-construct mode-line-modes)))
+      (if place
+          (setcar place rm--backup-construct)
+        (warn rm--warning-absent-element rm--mode-line-construct)))))
+
 (provide 'rich-minority)
-;;; rich-minority.el ends here.
+
+;;; rich-minority.el ends here
