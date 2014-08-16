@@ -4,6 +4,7 @@
 
 ;; Author: Artur Malabarba <bruce.connor.am@gmail.com>
 ;; URL: http://github.com/Bruce-Connor/rich-minority
+;; Package-Requires: ((cl-lib "0.5"))
 ;; Version: 0.1
 ;; Keywords: mode-line faces
 ;; Prefix: rm
