@@ -57,6 +57,7 @@
 ;;   │ (require 'rich-minority)
 ;;   ╰────
 
+(require 'cl-lib)
 
 (defun rm-bug-report ()
   "Opens github issues page in a web browser. Please send any bugs you find.
@@ -232,7 +233,7 @@ These properties take priority over those defined in
   :global t
   (if rich-minority-mode
       (let ((place (or (member 'minor-mode-alist mode-line-modes)
-                       (member-if
+                       (cl-member-if
                         (lambda (x) (and (listp x)
                                     (equal (car x) :propertize)
                                     (equal (cadr x) '("" minor-mode-alist))))
