@@ -244,7 +244,9 @@ These properties take priority over those defined in
               (setq rm--backup-construct (car place))
               (setcar place rm--mode-line-construct))
           (setq rich-minority-mode nil)
-          (warn rm--warning-absent-element 'minor-mode-alist)))
+          (if (member 'sml/pos-id-separator mode-line-format)
+              (message "You don't need to activate rich-minority-mode if you're using smart-mode-line")
+            (warn rm--warning-absent-element 'minor-mode-alist))))
     (let ((place (member rm--mode-line-construct mode-line-modes)))
       (if place
           (setcar place rm--backup-construct)
@@ -253,3 +255,24 @@ These properties take priority over those defined in
 (provide 'rich-minority)
 
 ;;; rich-minority.el ends here
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
