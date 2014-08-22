@@ -5,7 +5,7 @@
 ;; Author: Artur Malabarba <bruce.connor.am@gmail.com>
 ;; URL: http://github.com/Bruce-Connor/rich-minority
 ;; Package-Requires: ((cl-lib "0.5"))
-;; Version: 0.1
+;; Version: 0.1.1
 ;; Keywords: mode-line faces
 ;; Prefix: rm
 ;; Separator: -
@@ -201,7 +201,7 @@ These properties take priority over those defined in
                               x))
                      out))))
     (when rm-included-modes
-      (setq pred (if (listp rmm-included-modes) #'member #'rm--string-match))
+      (setq pred (if (listp rm-included-modes) #'member #'rm--string-match))
       (setq out
             (remove nil
                     (mapcar
