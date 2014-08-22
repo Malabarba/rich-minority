@@ -75,7 +75,7 @@ Please include your Emacs and rich-minority versions."
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Customization variables.
-(defcustom rm-excluded-modes '(" hl-p")
+(defcustom rm-blacklist '(" hl-p")
   "List of minor modes you want to hide from the mode-line.
 
 Has three possible values:
@@ -99,10 +99,11 @@ minor-mode lighters start with a space."
   :type '(choice (repeat string)
                  (regexp :tag "Regular expression."))
   :group 'rich-minority
-  :package-version '(rich-minority . "0.1"))
-(defvaralias 'rm-hidden-modes 'rm-excluded-modes)
+  :package-version '(rich-minority . "0.1.1"))
+(define-obsolete-variable-alias 'rm-excluded-modes 'rm-blacklist "0.1.1")
+(define-obsolete-variable-alias 'rm-hidden-modes 'rm-excluded-modes "0.1.1")
 
-(defcustom rm-included-modes nil
+(defcustom rm-whitelist nil
   "List of minor modes you want to include in the mode-line.
 
 - nil: All minor modes are shown in the mode-line (but see also
@@ -125,7 +126,8 @@ minor-mode lighters start with a space."
   :type '(choice (repeat string)
                  (regexp :tag "Regular expression."))
   :group 'rich-minority
-  :package-version '(rich-minority . "0.1"))
+  :package-version '(rich-minority . "0.1.1"))
+(define-obsolete-variable-alias 'rm-included-modes 'rm-whitelist "0.1.1")
 
 (defcustom rm-text-properties
   '(("\\` Ovwrt\\'" 'face 'font-lock-warning-face))

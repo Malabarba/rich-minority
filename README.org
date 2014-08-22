@@ -19,10 +19,10 @@ By default, this has a couple of small effects (provided as examples)
 it is up to you to customize it to your liking with the following
 three variables:
 
-- rm-excluded-modes :: List of minor mode names that will be hidden
+- rm-blacklist :: List of minor mode names that will be hidden
      from the minor-modes list. Use this to hide *only* a few modes that
      are always active and don't really contribute information.
-- rm-included-modes :: List of minor mode names that are allowed on
+- rm-whitelist :: List of minor mode names that are allowed on
      the minor-modes list. Use this to hide *all but* a few modes.
 - rm-text-properties :: List text properties to apply to each
      minor-mode lighter. For instance, by default we highlight =Ovwrt=
