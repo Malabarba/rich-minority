@@ -28,6 +28,15 @@ three variables:
      minor-mode lighter. For instance, by default we highlight =Ovwrt=
      with a red face, so you always know if you're in =overwrite-mode=.
 
+** Comparison to Diminish
+Diminish is an established player in the mode-line world. What can rich-minority offer?
+*** regexps
+*** "include" behavior
+*** highlighting specific modes
+
+What is rich-minority missing?
+*** It can't do replacement (yet).
+*** It doesn't have Will Mengarini's code-comment-essays.
 ** Installation
 
 This package is available fom Melpa, you may install it by calling
@@ -39,5 +48,3 @@ Alternatively, you can download it manually, place it in your
 #+begin_src emacs-lisp
 (require 'rich-minority)
 #+end_src
-
-
