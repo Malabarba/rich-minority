@@ -60,6 +60,8 @@
 
 (require 'cl-lib)
 
+(defconst rich-minority-version "0.1.1")
+
 (defun rm-bug-report ()
   "Opens github issues page in a web browser. Please send any bugs you find.
 Please include your Emacs and rich-minority versions."
