@@ -5,7 +5,7 @@
 ;; Author: Artur Malabarba <bruce.connor.am@gmail.com>
 ;; URL: http://github.com/Bruce-Connor/rich-minority
 ;; Package-Requires: ((cl-lib "0.5"))
-;; Version: 0.1.1
+;; Version: 0.2
 ;; Keywords: mode-line faces
 ;; Prefix: rm
 ;; Separator: -
@@ -57,10 +57,13 @@
 ;;   ╭────
 ;;   │ (require 'rich-minority)
 ;;   ╰────
-
+;;; Change Log:
+;; 0.2 - 2014/12/25 - Fix keymap bug.
+
+;;; Code:
 (require 'cl-lib)
 
-(defconst rich-minority-version "0.1.1")
+(defconst rich-minority-version "0.2")
 
 (defun rm-bug-report ()
   "Opens github issues page in a web browser. Please send any bugs you find.
@@ -158,14 +161,13 @@ These properties take priority over those defined in
 ;;;###autoload
 (defun rm--mode-list-as-string-list ()
   "Return `minor-mode-list' as a simple list of strings."
-  (let ((full-list (remove "" (mapcar #'format-mode-line minor-mode-alist))))
+  (let ((full-list (delete "" (mapcar #'format-mode-line minor-mode-alist))))
     (setq rm--help-echo
           (format "Full list:\n   %s\n\n%s"
-                  (mapconcat 'identity full-list "\n   ")
-                  rm--help-echo-bottom))
+            (mapconcat 'identity full-list "\n   ")
+            rm--help-echo-bottom))
     (mapcar #'rm--propertize
-            (rm--remove-hidden-modes
-             full-list))))
+      (rm--remove-hidden-modes full-list))))
 
 (defvar-local rm--help-echo nil
   "Used to set the help-echo string dynamically.")
@@ -173,7 +175,7 @@ These properties take priority over those defined in
 (defcustom rm-base-text-properties
   '('help-echo 'rm--help-echo
                'mouse-face 'mode-line-highlight
-              'local-map 'mode-line-minor-mode-keymap)
+               'local-map mode-line-minor-mode-keymap)
   "List of text propeties to apply to every minor mode."
   :type '(repeat sexp)
   :group 'rich-minority
@@ -200,19 +202,19 @@ These properties take priority over those defined in
       (setq out
             (remove nil
                     (mapcar
-                     (lambda (x) (unless (and (stringp x)
-                                         (funcall pred x rm-excluded-modes))
-                              x))
-                     out))))
+                        (lambda (x) (unless (and (stringp x)
+                                            (funcall pred x rm-excluded-modes))
+                                 x))
+                      out))))
     (when rm-included-modes
       (setq pred (if (listp rm-included-modes) #'member #'rm--string-match))
       (setq out
             (remove nil
                     (mapcar
-                     (lambda (x) (unless (and (stringp x)
-                                         (null (funcall pred x rm-included-modes)))
-                              x))
-                     out))))
+                        (lambda (x) (unless (and (stringp x)
+                                            (null (funcall pred x rm-included-modes)))
+                                 x))
+                      out))))
     out))
 
 (defun rm--string-match (string regexp)
@@ -259,24 +261,3 @@ These properties take priority over those defined in
 (provide 'rich-minority)
 
 ;;; rich-minority.el ends here
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
