@@ -8,11 +8,10 @@ in the mode-line.
 
 ** Usage
 
-To activate the enrichment of your minor-modes list, call =M-x
-rich-minority-mode=, or add this to your init file:
+To activate the enrichment of your minor-modes list, call =M-x rich-minority-mode=, or add this to your init file:
 
 #+begin_src emacs-lisp
-(rich-minority-mode 1)
+(rich-minority-mode)
 #+end_src
 
 By default, this has a couple of small effects (provided as examples)
