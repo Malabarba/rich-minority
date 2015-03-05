@@ -104,7 +104,7 @@ Please include your Emacs and rich-minority versions."
 Has three possible values:
 
 - nil: All minor modes are shown in the mode-line (but see also
-  `rm-included-modes').
+  `rm-whitelist').
 
 - List of strings: Represents a list of minor mode names that
   will be hidden from the minor-modes list.
@@ -115,7 +115,7 @@ Has three possible values:
   minor-mode list.
 
 If you'd like to use a list of regexps, simply use something like the following:
-    (setq rm-excluded-modes (mapconcat 'identity list-of-regexps \"\\\\|\"))
+    (setq rm-blacklist (mapconcat 'identity list-of-regexps \"\\\\|\"))
 
 Don't forget to start each string with a blank space, as most
 minor-mode lighters start with a space."
@@ -124,13 +124,13 @@ minor-mode lighters start with a space."
   :group 'rich-minority
   :package-version '(rich-minority . "0.1.1"))
 (define-obsolete-variable-alias 'rm-excluded-modes 'rm-blacklist "0.1.1")
-(define-obsolete-variable-alias 'rm-hidden-modes 'rm-excluded-modes "0.1.1")
+(define-obsolete-variable-alias 'rm-hidden-modes 'rm-blacklist "0.1.1")
 
 (defcustom rm-whitelist nil
   "List of minor modes you want to include in the mode-line.
 
 - nil: All minor modes are shown in the mode-line (but see also
-  `rm-excluded-modes').
+  `rm-blacklist').
 
 - List of strings: Represents a list of minor mode names that are
   allowed on the minor-modes list. Any minor-mode whose lighter
@@ -142,7 +142,7 @@ minor-mode lighters start with a space."
   the minor-mode list.
 
 If you'd like to use a list of regexps, simply use something like the following:
-    (setq rm-included-modes (mapconcat 'identity list-of-regexps \"\\\\|\"))
+    (setq rm-whitelist (mapconcat 'identity list-of-regexps \"\\\\|\"))
 
 Don't forget to start each string with a blank space, as most
 minor-mode lighters start with a space."
@@ -213,26 +213,26 @@ These properties take priority over those defined in
       (eval `(propertize ,mode ,@prop ,@rm-base-text-properties)))))
 
 (defun rm--remove-hidden-modes (li)
-  "Remove from LI elements that match `rm-excluded-modes' or don't match `rm-included-modes'."
-  (let ((pred (if (listp rm-excluded-modes) #'member #'rm--string-match))
+  "Remove from LI elements that match `rm-blacklist' or don't match `rm-whitelist'."
+  (let ((pred (if (listp rm-blacklist) #'member #'rm--string-match))
         (out li))
-    (when rm-excluded-modes
+    (when rm-blacklist
       (setq out
             (remove nil
                     (mapcar
-                        (lambda (x) (unless (and (stringp x)
-                                            (funcall pred x rm-excluded-modes))
-                                 x))
-                      out))))
-    (when rm-included-modes
-      (setq pred (if (listp rm-included-modes) #'member #'rm--string-match))
+                     (lambda (x) (unless (and (stringp x)
+                                         (funcall pred x rm-blacklist))
+                              x))
+                     out))))
+    (when rm-whitelist
+      (setq pred (if (listp rm-whitelist) #'member #'rm--string-match))
       (setq out
             (remove nil
                     (mapcar
-                        (lambda (x) (unless (and (stringp x)
-                                            (null (funcall pred x rm-included-modes)))
-                                 x))
-                      out))))
+                     (lambda (x) (unless (and (stringp x)
+                                         (null (funcall pred x rm-whitelist)))
+                              x))
+                     out))))
     out))
 
 (defun rm--string-match (string regexp)
