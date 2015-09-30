@@ -176,19 +176,19 @@ These properties take priority over those defined in
 (defconst rm--help-echo-bottom
   "Mouse-1: Mode Menu.\nMouse-2: Mode Help.\nMouse-3: Toggle Minor Modes.")
 
+(defvar-local rm--help-echo nil
+  "Used to set the help-echo string dynamically.")
+
 ;;;###autoload
 (defun rm--mode-list-as-string-list ()
   "Return `minor-mode-list' as a simple list of strings."
   (let ((full-list (delete "" (mapcar #'format-mode-line minor-mode-alist))))
     (setq rm--help-echo
           (format "Full list:\n   %s\n\n%s"
-            (mapconcat 'identity full-list "\n   ")
-            rm--help-echo-bottom))
+                  (mapconcat 'identity full-list "\n   ")
+                  rm--help-echo-bottom))
     (mapcar #'rm--propertize
-      (rm--remove-hidden-modes full-list))))
-
-(defvar-local rm--help-echo nil
-  "Used to set the help-echo string dynamically.")
+            (rm--remove-hidden-modes full-list))))
 
 (defcustom rm-base-text-properties
   '('help-echo 'rm--help-echo
