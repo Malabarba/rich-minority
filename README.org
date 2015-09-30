@@ -40,11 +40,11 @@ handles the minor-modes list. What can rich-minority /offer in contrast/?
 
 What is rich-minority /missing/?
 
-1. It doesn’t have a quick and simple replacement functionality yet.
-   Although you can set the =display= property of a minor-mode to
-   whatever string you want and that will function as a replacement.
-2. Its source comments lack [[http://www.eskimo.com/~seldon/diminish.el][Will Mengarini’s poetry]]. :-)
+It just doesn’t have a quick and simple replacement functionality yet.
+However, you can set the =display= property of a minor-mode to
+whatever string you want and that will function as a replacement.
 
 ** Installation
 
-This package is available fom Melpa, you may install it by calling =M-x package-install=.
+This package is available from GNU Elpa and Melpa, you may install it
+by calling =M-x list-packages=.
