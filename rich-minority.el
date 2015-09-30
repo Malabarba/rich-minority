@@ -1,9 +1,9 @@
 ;;; rich-minority.el --- Clean-up and Beautify the list of minor-modes.
 
-;; Copyright (C) 2014  <bruce.connor.am@gmail.com>
+;; Copyright (C) 2014, 2015 Free Software Foundation, Inc.
 
-;; Author: Artur Malabarba <bruce.connor.am@gmail.com>
-;; URL: http://github.com/Bruce-Connor/rich-minority
+;; Author: Artur Malabarba <emacs@endlessparentheses.com>
+;; URL: http://github.com/Malabarba/rich-minority
 ;; Package-Requires: ((cl-lib "0.5"))
 ;; Version: 1.0
 ;; Keywords: mode-line faces
@@ -81,10 +81,12 @@
 ;;; Code:
 (require 'cl-lib)
 
+(declare-function lm-version "lisp-mnt")
 (defun rm-bug-report ()
   "Opens github issues page in a web browser. Please send any bugs you find.
 Please include your Emacs and rich-minority versions."
   (interactive)
+  (require 'lisp-mnt)
   (message "Your rm-version is: %s, and your emacs version is: %s.\nPlease include this in your report!"
            (lm-version "rich-minority.el") emacs-version)
   (browse-url "https://github.com/Bruce-Connor/rich-minority/issues/new"))
