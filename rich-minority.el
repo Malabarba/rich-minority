@@ -5,7 +5,7 @@
 ;; Author: Artur Malabarba <bruce.connor.am@gmail.com>
 ;; URL: http://github.com/Bruce-Connor/rich-minority
 ;; Package-Requires: ((cl-lib "0.5"))
-;; Version: 0.2
+;; Version: 1.0
 ;; Keywords: mode-line faces
 ;; Prefix: rm
 ;; Separator: -
@@ -81,14 +81,12 @@
 ;;; Code:
 (require 'cl-lib)
 
-(defconst rich-minority-version "0.2")
-
 (defun rm-bug-report ()
   "Opens github issues page in a web browser. Please send any bugs you find.
 Please include your Emacs and rich-minority versions."
   (interactive)
   (message "Your rm-version is: %s, and your emacs version is: %s.\nPlease include this in your report!"
-           rich-minority-version emacs-version)
+           (lm-version "rich-minority.el") emacs-version)
   (browse-url "https://github.com/Bruce-Connor/rich-minority/issues/new"))
 (defun rm-customize ()
   "Open the customization menu in the `rich-minority' group."
