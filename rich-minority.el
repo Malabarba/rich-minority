@@ -3,12 +3,10 @@
 ;; Copyright (C) 2014, 2015 Free Software Foundation, Inc.
 
 ;; Author: Artur Malabarba <emacs@endlessparentheses.com>
-;; URL: http://github.com/Malabarba/rich-minority
+;; URL: https://github.com/Malabarba/rich-minority
 ;; Package-Requires: ((cl-lib "0.5"))
 ;; Version: 1.0
 ;; Keywords: mode-line faces
-;; Prefix: rm
-;; Separator: -
 
 ;;; Commentary:
 ;;
@@ -279,3 +277,7 @@ These properties take priority over those defined in
 (provide 'rich-minority)
 
 ;;; rich-minority.el ends here
+
+;; Local Variables:
+;; nameless-current-name: "rm"
+;; End:
