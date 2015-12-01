@@ -5,7 +5,7 @@
 ;; Author: Artur Malabarba <emacs@endlessparentheses.com>
 ;; URL: https://github.com/Malabarba/rich-minority
 ;; Package-Requires: ((cl-lib "0.5"))
-;; Version: 1.0
+;; Version: 1.0.1
 ;; Keywords: mode-line faces
 
 ;;; Commentary:
@@ -87,7 +87,7 @@ Please include your Emacs and rich-minority versions."
   (require 'lisp-mnt)
   (message "Your rm-version is: %s, and your emacs version is: %s.\nPlease include this in your report!"
            (lm-version "rich-minority.el") emacs-version)
-  (browse-url "https://github.com/Bruce-Connor/rich-minority/issues/new"))
+  (browse-url "https://github.com/Malabarba/rich-minority/issues/new"))
 (defun rm-customize ()
   "Open the customization menu in the `rich-minority' group."
   (interactive)
