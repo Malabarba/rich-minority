@@ -194,7 +194,7 @@ if the mode line string is empty."
     (setq rm--help-echo
           (format "Full list:\n%s\n\n%s"
                   (mapconcat (lambda (pair)
-                               (format "   %s (%S)" (car pair) (cdr pair)))
+                               (format "   %-15s (%S)" (car pair) (cdr pair)))
                              full-list "\n")
                   rm--help-echo-bottom))
     (mapcar #'rm--propertize
