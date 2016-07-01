@@ -197,8 +197,9 @@ if the mode line string is empty."
                                (format "   %s (%S)" (car pair) (cdr pair)))
                              full-list "\n")
                   rm--help-echo-bottom))
-    (mapcar (lambda (pair) (rm--propertize (car pair)))
-            (rm--remove-hidden-modes full-list))))
+    (mapcar #'rm--propertize
+            (rm--remove-hidden-modes
+             (mapcar #'car full-list)))))
 
 (defcustom rm-base-text-properties
   '('help-echo 'rm--help-echo
