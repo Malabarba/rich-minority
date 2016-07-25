@@ -190,11 +190,13 @@ if the mode line string is empty."
 (defun rm--mode-list-as-string-list ()
   "Return `minor-mode-list' as a simple list of strings."
   (let ((full-list (delq nil (mapcar #'rm-format-mode-line-entry
-                                     minor-mode-alist))))
+                                     minor-mode-alist)))
+        (spacer (propertize " " 'display '(space :align-to 15))))
     (setq rm--help-echo
           (format "Full list:\n%s\n\n%s"
                   (mapconcat (lambda (pair)
-                               (format "   %-15s (%S)" (car pair) (cdr pair)))
+                               (format "   %s%s(%S)"
+                                       (car pair) spacer (cdr pair)))
                              full-list "\n")
                   rm--help-echo-bottom))
     (mapcar #'rm--propertize
