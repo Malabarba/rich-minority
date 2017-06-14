@@ -20,7 +20,19 @@ three variables:
 
 - ~rm-blacklist~ :: List of minor mode names that will be hidden
      from the minor-modes list. Use this to hide *only* a few modes that
-     are always active and don’t really contribute information.
+     are always active and don’t really contribute information. eg:
+#+begin_src emacs-lisp
+(setq rm-blacklist
+      (format "^ \\(%s\\)$"
+          (mapconcat #'identity
+                      '("Fly.*"
+                        "Projectile.*"
+                        "my-keys-mode"
+                        "PgLn"
+                        "company"
+                        "Undo-Tree")
+                        "\\|")))
+#+end_src
 - ~rm-whitelist~ :: List of minor mode names that are allowed on
      the minor-modes list. Use this to hide *all but* a few modes.
 - ~rm-text-properties~ :: List text properties to apply to each
