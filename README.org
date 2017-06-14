@@ -33,6 +33,16 @@ three variables:
                         "Undo-Tree")
                         "\\|")))
 #+end_src
+     If for some reason all minor modes are not hidden when rich-minority
+     is activated, try the following:
+#+begin_src emacs-lisp
+;; Blacklist all minor modes
+(setq rm-blacklist
+      (format "^ \\(%s\\)$"
+          (mapconcat #'identity
+                      '(".*")
+                        "\\|")))
+#+end_src
 - ~rm-whitelist~ :: List of minor mode names that are allowed on
      the minor-modes list. Use this to hide *all but* a few modes.
 - ~rm-text-properties~ :: List text properties to apply to each
