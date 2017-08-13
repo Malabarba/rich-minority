@@ -6,6 +6,7 @@
 ;; URL: https://github.com/Malabarba/rich-minority
 ;; Package-Requires: ((cl-lib "0.5"))
 ;; Version: 1.0.1
+;; License: GNU General Public License v3 or newer
 ;; Keywords: mode-line faces
 
 ;;; Commentary:
