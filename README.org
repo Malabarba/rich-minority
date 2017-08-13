@@ -48,3 +48,7 @@ whatever string you want and that will function as a replacement.
 
 This package is available from GNU Elpa and Melpa, you may install it
 by calling =M-x list-packages=.
+
+** License
+
+rich-minority is released under the GPLv3 or newer.
