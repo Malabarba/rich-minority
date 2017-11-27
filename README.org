@@ -51,6 +51,17 @@ It just doesn’t have a quick and simple replacement functionality yet.
 However, you can set the =display= property of a minor-mode to
 whatever string you want and that will function as a replacement.
 
+Where in diminish.el you would do this:
+#+begin_src emacs-lisp
+(diminish 'auto-fill-function)
+#+end_src
+the following is probably the simplest rich-minority-mode equivalent,
+assuming that subsequent (diminish 'minor-mode-function) adds items
+to-be-hidden:
+
+(push " Fill" rm-blacklist)
+
+
 ** Installation
 
 This package is available from GNU Elpa and Melpa, you may install it
