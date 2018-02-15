@@ -40,6 +40,15 @@ handles the minor-modes list. What can rich-minority /offer in contrast/?
 
 - rich-minority is more versatile:
   1. It accepts *regexps*, instead of having to specify each minor-mode individually;
+     That is, where in diminish.el you would do this:
+     #+begin_src emacs-lisp
+     (diminish 'auto-fill-function)
+     #+end_src
+     rich-minority does this:
+     #+BEGIN_SRC emacs-lisp
+     (add-to-list " Fill" 'rm-blacklist)
+     #+END_SRC
+     where ~" Fill"~ could be any regular expression.
   2. It also offers a *whitelist* behaviour, in addition to the blacklist;
   3. It supports *highlighting* specific minor-modes with completely arbitrary text properties.
 - rich-minority takes a cleaner, functional approach. It doesn’t hack
