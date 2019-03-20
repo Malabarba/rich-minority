@@ -1,4 +1,4 @@
-;;; rich-minority.el --- Clean-up and Beautify the list of minor-modes.
+;;; rich-minority.el --- Clean-up and Beautify the list of minor-modes.  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2014, 2015 Free Software Foundation, Inc.
 
