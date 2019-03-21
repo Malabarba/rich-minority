@@ -200,7 +200,7 @@ if the mode line string is empty."
                                      minor-mode-alist))))
     (setq rm--help-echo
           (format "Full list:\n%s\n\n%s"
-                  (mapconcat rm--help-echo-descriptor full-list "\n")
+                  (mapconcat #'rm--help-echo-descriptor full-list "\n")
                   rm--help-echo-bottom))
     (mapcar #'rm--propertize
             (rm--remove-hidden-modes
