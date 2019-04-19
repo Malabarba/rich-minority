@@ -97,6 +97,8 @@ Please include your Emacs and rich-minority versions."
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Customization variables.
+(define-obsolete-variable-alias 'rm-excluded-modes 'rm-blacklist "0.1.1")
+(define-obsolete-variable-alias 'rm-hidden-modes 'rm-blacklist "0.1.1")
 (defcustom rm-blacklist '(" hl-p")
   "List of minor modes you want to hide from the mode-line.
 
@@ -122,9 +124,8 @@ minor-mode lighters start with a space."
                  (regexp :tag "Regular expression."))
   :group 'rich-minority
   :package-version '(rich-minority . "0.1.1"))
-(define-obsolete-variable-alias 'rm-excluded-modes 'rm-blacklist "0.1.1")
-(define-obsolete-variable-alias 'rm-hidden-modes 'rm-blacklist "0.1.1")
 
+(define-obsolete-variable-alias 'rm-included-modes 'rm-whitelist "0.1.1")
 (defcustom rm-whitelist nil
   "List of minor modes you want to include in the mode-line.
 
@@ -149,7 +150,6 @@ minor-mode lighters start with a space."
                  (regexp :tag "Regular expression."))
   :group 'rich-minority
   :package-version '(rich-minority . "0.1.1"))
-(define-obsolete-variable-alias 'rm-included-modes 'rm-whitelist "0.1.1")
 
 (defcustom rm-text-properties
   '(("\\` Ovwrt\\'" 'face 'font-lock-warning-face))
