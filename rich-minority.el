@@ -270,7 +270,11 @@ if the mode line string is empty."
   "Construct containing `minor-mode-alist' which we removed from the mode-line.")
 
 ;;;###autoload
-(define-minor-mode rich-minority-mode nil nil " $"
+(define-minor-mode rich-minority-mode
+  "Rich minority mode."
+  :init-value nil
+  :keymap nil
+  :lighter " $"
   :global t
   (if rich-minority-mode
       (let ((place (or (member 'minor-mode-alist mode-line-modes)
